@@ -1,0 +1,44 @@
+{
+  "wave": 1,
+  "sealed": "2026-10-02T02:4? CST",
+  "worker": "quilt-edge-lab",
+  "url": "https://quilt-edge-lab.casey-digennaro.workers.dev",
+  "versions": {"deploy1": "379825f9-58f7-412f-bb2d-8cb368e97044", "deploy2": "2ffe84cf-1fee-44b3-bae1-3689a80514b3", "deploy3_bench": "f5567c77-add2-47c0-a589-4bc72fcde177"},
+  "experiments": {
+    "E-CF-1": {
+      "question": "seeded CA iterator deterministic across edge isolates?",
+      "protocol": "3x GET /run rule=30 seed=42 ticks=1000 width=128; FAIL-first local pin via tools/local-check.mjs",
+      "local_pin": "21c225f9e7320974 (node v24.16.0, CPU)",
+      "results": {"runs": 3, "colo": ["SIN", "SIN", "SIN"], "tails": ["21c225f9e7320974", "21c225f9e7320974", "21c225f9e7320974"], "full_chain_equal": true},
+      "verdict": "PASS (deterministic across isolate+runtime paths: edge isolate x3 AND local node v24); cross-colo INCONCLUSIVE per prereg H2 (all runs SIN; same-path repetition cannot audit absence)"
+    },
+    "E-CF-2": {
+      "question": "edge tick throughput per colo",
+      "attempts": {
+        "2": {"verdict": "FAIL-instrument", "detail": "Date.now() 1ms resolution; wall read 0ms on 10k ticks"},
+        "2b": {"verdict": "FAIL-instrument", "detail": "performance.now() ALSO reads 0 on 100k ticks (25.6M cell-ops in <1ms impossible → clocks frozen in isolate)"},
+        "2c": {"verdict": "FAIL-instrument", "detail": "accumulated 20x10k repeats still 0ms total → per-request clocks clamped, not just coarse"},
+        "2d": {"verdict": "PASS-via-external-clock", "detail": "e2e 37.348s/37.355s reproducible ±0.006s for 200x10k ticks rule30/rule110; baseline e2e 0.505-0.658s; upper bound ≈18.4us/tick @ width128 ≈ 7ns/cell-update; >30s e2e likely exceeds subrequest wall limit (response body lost — treat 120-repeat cap for future arms)"}
+      },
+      "verdict": "PASS via different path (client clock), instrument defect root-caused (frozen isolate clocks) and sealed"
+    },
+    "E-CF-3": {
+      "question": "ledger gamma/eta/efficiency generated columns compute per schema (mirrors fleet harness-experiments ledger)",
+      "results": {
+        "row1": {"gamma": 50, "eta": 950, "efficiency": 19, "hand_check": "950/50=19 exact"},
+        "row2": {"gamma": 520, "eta": 950, "efficiency": 1.8269230769230769, "hand_check": "950/520 exact"}
+      },
+      "verdict": "PASS"
+    },
+    "E-CF-4": {
+      "question": "promote useful quilt from KV receipt to durable R2 + ledger witness, read back hash-intact",
+      "results": {"saved": true, "key": "saved/run_30_42_1000_b1cc25c0.json", "witness": "exp_1790880109015_k84870", "readback_chain_tail": "21c225f9e7320974", "matches_sealed_ecf1_tail": true},
+      "verdict": "PASS — the save-when-useful loop closes end-to-end"
+    },
+    "E-CF-5": {
+      "question": "model-backed iterator arm",
+      "results": {"workers_ai": "10001 Unable to authenticate (token lacks AI scope/entitlement)", "external_providers": "none provisioned to this worker (fleet precedent: deepinfra keys exist in harness-experiments worker secrets)"},
+      "verdict": "BLOCKED — unblock named in DEBRIEF roadmap"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+name = "quilt-edge-lab"
+main = "src/worker.js"
+compatibility_date = "2024-09-25"
+
+# NOTE: database_id / namespace_id / bucket_name are filled in after resource
+# creation (see DEPLOY.md). The *.id placeholders below are REPLACED by the
+# setup script in tools/setup.sh — do not hand-edit without updating it.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "quilt-edge-lab"
+database_id = "5c09312b-bde2-423e-8a15-c2a3e6253c02"
+
+[[kv_namespaces]]
+binding = "RECEIPTS"
+id = "86a9bec34b084d239041a07e8f95f080"
+
+[[r2_buckets]]
+binding = "SAVES"
+bucket_name = "quilt-edge-lab-saves"
