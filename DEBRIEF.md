@@ -47,6 +47,22 @@ local pin before any cloud number was believed.
    runs, so a provider-key path is proven in-fleet — the lab needs a secret
    provisioned (never committed; `wrangler secret put`).
 
+## Wave 2 — W2.3 deterministic arm: canon-rotation invariance (2026-10-02, local node)
+
+Ran the deterministic skeleton of W2.3 in pure node (no deploy; `src/worker.js`
+untouched). Prereg sealed (`PREREG.md §W2.3-DET`) and pins executed FAIL-first
+before any run. Result: the naive receipt chain IS origin-sensitive — rotated
+genesis diverges at the very first chained row, 12/12 pairs, 6000/6000 rows.
+Digesting the lexicographic-minimum rotation instead makes the chain exactly
+origin-invariant: 0/6000 divergent rows, identical tails, every tick. Control
+(translation-at-digest, no re-sort) fires via a different code path; rule-30
+rotation equivariance verified observationally on every trajectory. Pins 4/4
+(`experiments/canon-invariance.pins.mjs`); non-degeneracy held (501 distinct
+states/seed) so the arm is PASSED, not INCONCLUSIVE. Canon-rule candidate
+**C-ROT** minted for fleet canon review (see `receipts/wave2-canon-invariance/RESULT.md`).
+Still open in W2.3-proper: the semantic/embedding sort (permutation classes
+beyond rotation) — same shape, different representative function.
+
 ## Roadmap — wave 2 (in order)
 
 - **W2.1 Cross-colo determinism.** Deploy the same worker to a second route

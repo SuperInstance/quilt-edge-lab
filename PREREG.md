@@ -46,6 +46,28 @@ without different-path confirmation is INCONCLUSIVE, never PASSED.
   not provisioned to this lab worker. This wave runs the deterministic arm
   only; E-CF-5's unblock conditions are named in the wave-1 debrief roadmap.
 
+## W2.3-DET · canon-permutation invariance of receipt chains (deterministic arm) — sealed 2026-10-02 before any run
+Question: the quilt receipt chain digests the CA lane in position order; a ring
+state has no privileged origin — rotating the lane is the same world. DOES the
+chain notice? If we canon-sort states under rotation before digesting, the
+chain becomes origin-invariant. Deterministic skeleton of W2.3 (semantic sort
+stands in for embedding sort); a canon-rule candidate either way.
+- **H1 (prediction)**: naive chain DIVERGES under rotation (r_k ≠ r'_k for a
+  rotated genesis) — the chain is origin-sensitive.
+- **H2 (prediction)**: canon-rotation-sorted chain is INVARIANT: for every tick
+  t, digest_k(t) == digest_k'(t) for any rotated genesis, because sort erases
+  the origin before digest.
+- **Control (different path)**: translation instead of rotation — shift the
+  ring by k without re-sorting; naive chain must diverge (fault-detection).
+- **INCONCLUSIVE rule**: if all seeds give identical pre-sort states
+  (degenerate attractor), the arm is INCONCLUSIVE, never PASSED.
+- Protocol: pure local node (no deploy); rule 30, width 128, 500 ticks; seeds
+  {42,7,2026,31337} via mulberry32; rotations {1,17,63}; chain convention =
+  worker lineage (fnv1a-64 rows `${prev}|${t}|${sd}`, head
+  fnv1a64("GENESIS_QUILT_EDGE_LAB"), rows t=1..T). Pins sealed BEFORE the run:
+  experiments/canon-invariance.pins.mjs — P1 naive divergence, P2 canon
+  invariance, P3 translation control, P4 non-degeneracy.
+
 ## Global rules adopted (GPU-EXPERIMENTS §0, substrate-agnostic)
 std==0 over same-seed same-path → expected, never evidence; controls vary by a
 different path; seed everything; device string with every number; FAIL-first:

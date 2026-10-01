@@ -1,0 +1,12 @@
+✔ P1 · naive chain diverges under rotated genesis (H1: origin-sensitive) (2.424377ms)
+✔ P2 · canon-sorted chain invariant under rotation (H2: zero divergence at every t) (0.959072ms)
+✔ P3 · translation control diverges (fault-detection control, different path) (2.728976ms)
+✔ P4 · non-degeneracy (INCONCLUSIVE guard: >=2 distinct states per run; seeds not clones) (0.83365ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 173.323805
