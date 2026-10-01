@@ -1,0 +1,46 @@
+{
+  "wave": 2,
+  "sealed": "2026-10-02",
+  "worker": "quilt-edge-lab",
+  "url": "https://quilt-edge-lab.casey-digennaro.workers.dev",
+  "deploy_version": "0a685496-e8a6-4957-879c-ee70d5c19989",
+  "scope": "W2.5 auto-promotion + W2.1-prep colo aggregation + rule 150",
+  "local_pins": {
+    "command": "node --test test/wave2.pins.mjs",
+    "result": "6/6 pass (P1 off-by-default, P2 fires+R2+witness+notes, P5 AND-thresholds, P3 colo-report, P4 rule-150 vs XOR reference, P6 wave-1 tail regression)",
+    "fail_first": {
+      "command": "node tools/local-check.mjs",
+      "expected_tail": "21c225f9e7320974",
+      "observed_tail": "21c225f9e7320974",
+      "note": "run BEFORE any cloud number was trusted; tool now also accepts an optional rule arg (default 30 unchanged)"
+    }
+  },
+  "experiments": {
+    "E-W2-1": {
+      "question": "does AUTO_PROMOTE (efficiency>=15 AND quality>=0.8) fire on /ledger/append?auto=1 and leave default behavior unchanged?",
+      "protocol": "cloud negative control (append efficiency-20 row WITHOUT auto) then positive (fresh rule-150 run, 404 pre-check on R2 key, append WITH auto=1, readback)",
+      "results": {
+        "noauto_append": {"inserted": "exp_1790880906010_2ax0g2", "efficiency": 20, "auto_promote": null},
+        "auto1_append": {"inserted": "exp_1790880940032_jxcf4b", "derived": {"gamma": 50, "eta": 1000, "efficiency": 20, "quality_score": 1.0}, "auto_promote": {"fired": true, "saved": true, "key": "saved/run_150_42_1000_600535dd.json", "witness": "exp_1790880941033_8p60x4"}},
+        "r2_precheck_status": 404,
+        "r2_readback_status": 200,
+        "readback_chain_tail": "1fdaf9740d435dd0",
+        "notes_writeback": "wave2 cloud sequence | AUTO_PROMOTE witness=exp_1790880941033_8p60x4 key=saved/run_150_42_1000_600535dd.json (verified via wrangler d1 execute --remote SELECT)"
+      },
+      "caveat": "the first no-auto append referenced run_30_42_1000_b1cc25c0 whose R2 key already existed from wave-1 E-CF-4 — so the POSITIVE case used a fresh never-promoted rule-150 run for an unambiguous 404→200 transition",
+      "verdict": "PASS — threshold fires end-to-end (D1 → R2 → witness row → notes write-back) and default path is unchanged"
+    },
+    "E-W2-2": {
+      "question": "rule 150 (Wolfram class III) as a new deterministic substrate — edge tail equals local recomputation?",
+      "protocol": "GET /run?rule=150&seed=42&ticks=1000&width=128 vs node tools/local-check.mjs 150 (CPU, different runtime path)",
+      "results": {"local_tail": "1fdaf9740d435dd0", "cloud_tail": "1fdaf9740d435dd0", "colo": "SIN", "run_id": "run_150_42_1000_600535dd"},
+      "verdict": "PASS (different-runtime equality; local pin P4 additionally checks the full 300-row chain against an independent XOR-based rule evaluation)"
+    },
+    "E-W2-3": {
+      "question": "does /colo-report aggregate the run:* diversity audit trail?",
+      "results": {"colo": {"SIN": {"count": 8, "tails": 8}}, "keys_scanned": 8},
+      "verdict": "PASS mechanically; all runs landed SIN so cross-colo diversity remains INCONCLUSIVE (consistent with wave-1 E-CF-1 escape hatch) — this endpoint is the W2.1 audit trail once a second region is reachable"
+    }
+  },
+  "known_quirk": "wrangler warns on src/worker.js `+body.quality_score ?? 0.5` (NaN never triggers the 0.5 fallback) — inherited verbatim from wave-1 /promote to preserve its sealed behavior; AUTO_PROMOTE reads quality_score from the D1 row instead, so the quirk does not touch the auto path"
+}

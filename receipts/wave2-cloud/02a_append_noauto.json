@@ -1,0 +1,12 @@
+{
+ "inserted": "exp_1790880906010_2ax0g2",
+ "derived": {
+  "experiment_id": "exp_1790880906010_2ax0g2",
+  "gamma": 50,
+  "eta": 1000,
+  "efficiency": 20,
+  "success_rate": 1,
+  "quality_score": 1
+ },
+ "auto_promote": null
+}

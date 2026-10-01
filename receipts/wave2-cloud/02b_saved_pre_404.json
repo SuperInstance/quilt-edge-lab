@@ -1,0 +1,12 @@
+{
+ "key": "saved/run_30_42_1000_b1cc25c0.json",
+ "size": 121,
+ "body": {
+  "promoted_from": "run_30_42_1000_b1cc25c0",
+  "colo": "SIN",
+  "chain_tail": "21c225f9e7320974",
+  "ticks": 1000,
+  "rule": 30,
+  "seed": 42
+ }
+}
