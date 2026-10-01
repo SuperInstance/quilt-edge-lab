@@ -1,0 +1,346 @@
+{
+  "experiment": "canon-fixed-boundary (W3.1 control arm for C-ROT)",
+  "device": "local node v24.16.0, CPU (pure node per task — no deploy)",
+  "generated_at": "2026-10-01T20:23:49.592Z",
+  "params": {
+    "rule": 30,
+    "width": 128,
+    "ticks": 500,
+    "seeds": [
+      42,
+      7,
+      2026,
+      31337
+    ],
+    "rotations": [
+      1,
+      17,
+      63
+    ],
+    "boundary": "fixed zero-flush (Dirichlet): step reads constant 0 outside the lane; edges are privileged positions; rotation is NOT a dynamical symmetry",
+    "chain": "fnv1a-64 rows `${prev}|${t}|${sd}` from head fnv1a64(GENESIS_QUILT_EDGE_LAB), rows t=1..T (src/worker.js lineage, file untouched)",
+    "canon": "lexicographic minimum rotation of the state bit-string (Booth-equivalent scan)",
+    "wave2_receipt_untouched": "/tmp/zlanes/lane3/results.json (sealed wave-2 receipt, not written by this arm)"
+  },
+  "predictions": {
+    "H1F": "naive chain diverges under rotated genesis (origin-sensitive), t>=1 every seed/rotation",
+    "H2F": "canon chain ALSO diverges under rotated genesis — EXPECTED: rotated genesis is a genuinely different initial condition under fixed boundaries; canon-invariant would mean C-ROT erases real signal (overclaim)",
+    "CF": "fixed-boundary dynamics NOT rotation-equivariant AND translation content != rotated-run chain (degeneracy broken)",
+    "ND": ">=2 distinct raw states per run; seeds not clones"
+  },
+  "seeds": {
+    "7": {
+      "genesis_popcount": 50,
+      "distinct_raw_states": 340,
+      "naive_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "4c0a90d43c61a135",
+          "tail_rot": "b73496062265c511"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "4c0a90d43c61a135",
+          "tail_rot": "44537fe3d2e095e7"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "4c0a90d43c61a135",
+          "tail_rot": "7a85ef9d13b715fd"
+        }
+      },
+      "canon_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "268ae549a0b17482",
+          "tail_rot": "f907d08fa17a3e2b"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "268ae549a0b17482",
+          "tail_rot": "f49b37b8f46c59b6"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "268ae549a0b17482",
+          "tail_rot": "1137697e1dedd0f1"
+        }
+      },
+      "translation_control": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "4c0a90d43c61a135",
+          "tail_shift": "5986c3c8707407bd"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "4c0a90d43c61a135",
+          "tail_shift": "62739b817fd4f2b5"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "4c0a90d43c61a135",
+          "tail_shift": "1427cdfb8cedfbbe"
+        }
+      },
+      "observations": {
+        "fixed_boundary_breaks_rotation_equivariance": true,
+        "translation_equals_rotation_run": false,
+        "equivariance_mismatch_rows": 500
+      }
+    },
+    "42": {
+      "genesis_popcount": 64,
+      "distinct_raw_states": 293,
+      "naive_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "22a23be2fcd9d011",
+          "tail_rot": "3f7144d0304fec77"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "22a23be2fcd9d011",
+          "tail_rot": "33f88a011182dfad"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "22a23be2fcd9d011",
+          "tail_rot": "ef2e1e7fd94fb251"
+        }
+      },
+      "canon_rotation": {
+        "1": {
+          "first_divergence_tick": 2,
+          "divergent_rows": 499,
+          "rows_compared": 500,
+          "tail_base": "75fe3c1a6adec0c3",
+          "tail_rot": "a4412dafcb554f88"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "75fe3c1a6adec0c3",
+          "tail_rot": "88c38262e9006b68"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "75fe3c1a6adec0c3",
+          "tail_rot": "7931b78405fd0ace"
+        }
+      },
+      "translation_control": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "22a23be2fcd9d011",
+          "tail_shift": "85b0bd38f2164397"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "22a23be2fcd9d011",
+          "tail_shift": "d20438cbfa63abe0"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "22a23be2fcd9d011",
+          "tail_shift": "00ddbccad86b2af4"
+        }
+      },
+      "observations": {
+        "fixed_boundary_breaks_rotation_equivariance": true,
+        "translation_equals_rotation_run": false,
+        "equivariance_mismatch_rows": 500
+      }
+    },
+    "2026": {
+      "genesis_popcount": 63,
+      "distinct_raw_states": 363,
+      "naive_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "264328492d3ce7bf",
+          "tail_rot": "8bd4b73491741058"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "264328492d3ce7bf",
+          "tail_rot": "caaab661d4a91809"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "264328492d3ce7bf",
+          "tail_rot": "21e119adcacf166f"
+        }
+      },
+      "canon_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "6476b0612d69dcd2",
+          "tail_rot": "1e5d2b63f2489fda"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "6476b0612d69dcd2",
+          "tail_rot": "10f6bd98c1e2033b"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "6476b0612d69dcd2",
+          "tail_rot": "22bf52e5851fc2a3"
+        }
+      },
+      "translation_control": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "264328492d3ce7bf",
+          "tail_shift": "6ab948f111c9a45b"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "264328492d3ce7bf",
+          "tail_shift": "a9f370b4579a1a3e"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "264328492d3ce7bf",
+          "tail_shift": "7b5ad0979c5d9945"
+        }
+      },
+      "observations": {
+        "fixed_boundary_breaks_rotation_equivariance": true,
+        "translation_equals_rotation_run": false,
+        "equivariance_mismatch_rows": 500
+      }
+    },
+    "31337": {
+      "genesis_popcount": 52,
+      "distinct_raw_states": 351,
+      "naive_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "aecbbc0e8b59a55d",
+          "tail_rot": "a6aae92f748106dc"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "aecbbc0e8b59a55d",
+          "tail_rot": "c9dc2ddc4f65c404"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "aecbbc0e8b59a55d",
+          "tail_rot": "10a2f09f80804121"
+        }
+      },
+      "canon_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "c4ba2274bb3a9f11",
+          "tail_rot": "cb1f812d8d789254"
+        },
+        "17": {
+          "first_divergence_tick": 2,
+          "divergent_rows": 499,
+          "rows_compared": 500,
+          "tail_base": "c4ba2274bb3a9f11",
+          "tail_rot": "77a2d628938ededb"
+        },
+        "63": {
+          "first_divergence_tick": 2,
+          "divergent_rows": 499,
+          "rows_compared": 500,
+          "tail_base": "c4ba2274bb3a9f11",
+          "tail_rot": "ba2e5712b10ace90"
+        }
+      },
+      "translation_control": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "aecbbc0e8b59a55d",
+          "tail_shift": "7b358f12b3f5b7ea"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "aecbbc0e8b59a55d",
+          "tail_shift": "05096d32d5ab4b9f"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "aecbbc0e8b59a55d",
+          "tail_shift": "5836de9c967b0f31"
+        }
+      },
+      "observations": {
+        "fixed_boundary_breaks_rotation_equivariance": true,
+        "translation_equals_rotation_run": false,
+        "equivariance_mismatch_rows": 499
+      }
+    }
+  },
+  "cross_seed_identical_states": false
+}
