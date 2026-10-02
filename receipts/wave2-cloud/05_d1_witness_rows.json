@@ -1,0 +1,36 @@
+[
+  {
+    "results": [
+      {
+        "experiment_id": "exp_1790880940032_jxcf4b",
+        "category": "wave2-auto-promo",
+        "tags": "wave2,autopromote",
+        "notes": "wave2 cloud sequence | AUTO_PROMOTE witness=exp_1790880941033_8p60x4 key=saved/run_150_42_1000_600535dd.json"
+      },
+      {
+        "experiment_id": "exp_1790880941033_8p60x4",
+        "category": "promotion",
+        "tags": "promote,r2,auto",
+        "notes": "saved/run_150_42_1000_600535dd.json"
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "SIN",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.2866
+      },
+      "duration": 0.2866,
+      "changes": 0,
+      "last_row_id": 6,
+      "changed_db": false,
+      "size_after": 24576,
+      "rows_read": 4,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]

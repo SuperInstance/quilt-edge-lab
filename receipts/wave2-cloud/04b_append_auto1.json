@@ -1,0 +1,19 @@
+{
+ "inserted": "exp_1790880940032_jxcf4b",
+ "derived": {
+  "experiment_id": "exp_1790880940032_jxcf4b",
+  "gamma": 50,
+  "eta": 1000,
+  "efficiency": 20,
+  "success_rate": 1,
+  "quality_score": 1
+ },
+ "auto_promote": {
+  "fired": true,
+  "saved": true,
+  "key": "saved/run_150_42_1000_600535dd.json",
+  "reason": "",
+  "witness": "exp_1790880941033_8p60x4",
+  "quality_score": 1
+ }
+}

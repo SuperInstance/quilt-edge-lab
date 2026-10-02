@@ -3,7 +3,12 @@
 // Receipt chain culture follows edge-ledger (fleet-state@v1) + quilt-arcade
 // kit.mjs (fnv1a-64 chained rows). CA substrate = elementary rules on Uint8.
 
-const RULES = { 30: 30, 90: 90, 110: 110, 184: 184 };
+const RULES = { 30: 30, 90: 90, 110: 110, 150: 150, 184: 184 };
+
+// W2.5 auto-promotion threshold: a ledger row whose derived efficiency and
+// quality clear BOTH bars promotes its referenced run artifact to R2
+// automatically ("saved when found useful" becomes self-acting).
+const AUTO_PROMOTE = { min_efficiency: 15, min_quality: 0.8 };
 
 // mulberry32 — seeded PRNG (recorded, not crypto)
 function mulberry32(a) {
@@ -56,7 +61,7 @@ function step(state, rule, width) {
 }
 
 function runExperiment({ rule = 30, seed = 42, ticks = 1000, width = 128 }) {
-  if (!RULES[rule]) throw new Error("rule not in {30,90,110,184}: " + rule);
+  if (!RULES[rule]) throw new Error("rule not in {30,90,110,150,184}: " + rule);
   const rng = mulberry32(seed);
   let state = new Uint8Array(width);
   for (let i = 0; i < width; i++) state[i] = rng() < 0.5 ? 1 : 0;
@@ -96,6 +101,31 @@ async function ledgerInsert(env, row) {
     row.quality_score ?? 0, row.lessons_extracted ?? 0, row.notes ?? "", row.tags ?? ""
   ).run();
   return id;
+}
+
+// Shared promotion path: KV run receipt → R2 artifact + promotion ledger row.
+// Used by POST /promote (manual) and AUTO_PROMOTE on /ledger/append?auto=1.
+async function promoteRun(env, runId, qualityScore, opts = {}) {
+  const run = await env.RECEIPTS.get(`run:${runId}`, "json");
+  if (!run) return { error: "run not found", run_id: runId };
+  const artifact = JSON.stringify({ promoted_from: runId, colo: run.colo, chain_tail: run.chain_tail, ticks: run.ticks, rule: run.rule, seed: run.seed });
+  const key = `saved/${runId}.json`;
+  let saved = false, reason = "";
+  if (env.SAVES) {
+    await env.SAVES.put(key, artifact);
+    saved = true;
+  } else reason = "R2 binding SAVES absent";
+  const ledger_id = await ledgerInsert(env, {
+    category: "promotion", description: `${opts.auto ? "auto" : "manual"} promote ${runId} to durable storage`,
+    hypothesis: opts.auto
+      ? "AUTO_PROMOTE threshold (efficiency>=15 AND quality>=0.8) fires without a human in the loop"
+      : "useful quilts persist beyond KV TTL",
+    model: `ca-rule-${run.rule}`,
+    items_completed: saved ? 1 : 0, items_failed: saved ? 0 : 1,
+    quality_score: qualityScore, notes: reason || key, tags: opts.auto ? "promote,r2,auto" : "promote,r2",
+    wall_clock_seconds: 0,
+  });
+  return { saved, key, reason, witness: ledger_id, quality_score: qualityScore };
 }
 
 export default {
@@ -178,38 +208,66 @@ export default {
 
       if (route === "/promote" && request.method === "POST") {
         const body = await request.json();
-        const run = await env.RECEIPTS.get(`run:${body.run_id}`, "json");
-        if (!run) return json({ error: "run not found" }, 404);
         const quality = +body.quality_score ?? 0.5;
-        const artifact = JSON.stringify({ promoted_from: body.run_id, colo: run.colo, chain_tail: run.chain_tail, ticks: run.ticks, rule: run.rule, seed: run.seed });
-        const key = `saved/${body.run_id}.json`;
-        let saved = false, reason = "";
-        if (env.SAVES) {
-          await env.SAVES.put(key, artifact);
-          saved = true;
-        } else reason = "R2 binding SAVES absent";
-        const ledger_id = await ledgerInsert(env, {
-          category: "promotion", description: `promote ${body.run_id} to durable storage`,
-          hypothesis: "useful quilts persist beyond KV TTL", model: `ca-rule-${run.rule}`,
-          items_completed: saved ? 1 : 0, items_failed: saved ? 0 : 1,
-          quality_score: quality, notes: reason || key, tags: "promote,r2",
-          wall_clock_seconds: 0,
-        });
-        return json({ saved, key, reason, witness: ledger_id, quality_score: quality });
+        const res = await promoteRun(env, body.run_id, quality);
+        return json(res, res.error ? 404 : 200);
       }
 
       if (route === "/ledger/append" && request.method === "POST") {
         const body = await request.json();
         const id = await ledgerInsert(env, body);
         const { results } = await env.DB.prepare(
-          "SELECT experiment_id, gamma, eta, efficiency, success_rate FROM experiments WHERE experiment_id = ?"
+          "SELECT experiment_id, gamma, eta, efficiency, success_rate, quality_score FROM experiments WHERE experiment_id = ?"
         ).bind(id).all();
-        return json({ inserted: id, derived: results?.[0] ?? null });
+        const row = results?.[0] ?? null;
+        // AUTO_PROMOTE (W2.5): opt-in via ?auto=1 — default behavior unchanged.
+        // Fires only when the DERIVED row (what D1 actually stored) clears both
+        // bars; witness id is written back into the appended row's notes.
+        let auto_promote = null;
+        if (url.searchParams.get("auto") === "1" && row) {
+          const reasons = [];
+          if (!(row.efficiency >= AUTO_PROMOTE.min_efficiency)) reasons.push(`efficiency ${row.efficiency} < ${AUTO_PROMOTE.min_efficiency}`);
+          if (!(row.quality_score >= AUTO_PROMOTE.min_quality)) reasons.push(`quality_score ${row.quality_score} < ${AUTO_PROMOTE.min_quality}`);
+          if (!body.run_id) reasons.push("no run_id referenced by the row");
+          if (reasons.length === 0) {
+            auto_promote = { fired: true, ...(await promoteRun(env, body.run_id, row.quality_score, { auto: true })) };
+            if (auto_promote.witness) {
+              await env.DB.prepare("UPDATE experiments SET notes = ? WHERE experiment_id = ?")
+                .bind(`${body.notes ? body.notes + " | " : ""}AUTO_PROMOTE witness=${auto_promote.witness} key=${auto_promote.key}`, id)
+                .run();
+            }
+          } else {
+            auto_promote = { fired: false, reasons };
+          }
+        }
+        return json({ inserted: id, derived: row, auto_promote });
+      }
+
+      if (route === "/colo-report") {
+        // W2.1 diversity audit trail: aggregate all run:* receipts by colo —
+        // count of runs and nunique chain_tails seen at each colo. (KV list is
+        // eventually consistent; a run PUT seconds ago may not appear yet.)
+        const agg = {};
+        let cursor;
+        do {
+          const page = await env.RECEIPTS.list({ prefix: "run:", cursor });
+          for (const k of page.keys) {
+            const run = await env.RECEIPTS.get(k.name, "json");
+            const c = run?.colo ?? "unknown";
+            agg[c] ??= { count: 0, tails: new Set() };
+            agg[c].count++;
+            if (run?.chain_tail) agg[c].tails.add(run.chain_tail);
+          }
+          cursor = page.list_complete ? undefined : page.cursor;
+        } while (cursor);
+        const colo = {};
+        for (const [c, v] of Object.entries(agg)) colo[c] = { count: v.count, tails: v.tails.size };
+        return json({ colo, keys_scanned: Object.values(colo).reduce((n, v) => n + v.count, 0) });
       }
 
       return json({
         service: "quilt-edge-lab",
-        routes: ["/run?rule=30&seed=42&ticks=1000", "/bench?rule=30&seed=42&ticks=10000&repeats=20", "/compare?a=..&b=..", "/ledger", "POST /promote", "POST /ledger/append", "/saved/<key>"],
+        routes: ["/run?rule=30&seed=42&ticks=1000", "/bench?rule=30&seed=42&ticks=10000&repeats=20", "/compare?a=..&b=..", "/ledger", "POST /promote", "POST /ledger/append?auto=1 (AUTO_PROMOTE: eff>=15 AND quality>=0.8)", "/colo-report", "/saved/<key>"],
         device: `cloudflare-worker colo=${colo}`,
       });
     } catch (e) {
