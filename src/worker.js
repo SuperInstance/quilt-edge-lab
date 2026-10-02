@@ -98,7 +98,7 @@ async function ledgerInsert(env, row) {
     row.batch_size ?? 1, row.concurrent_agents ?? 1, row.provider ?? "cloudflare-worker",
     row.tokens_in ?? 0, row.tokens_out ?? 0, row.wall_clock_seconds ?? 0,
     row.api_calls ?? 1, row.items_completed ?? 0, row.items_failed ?? 0,
-    row.quality_score ?? 0, row.lessons_extracted ?? 0, row.notes ?? "", row.tags ?? ""
+    +(row.quality_score ?? 0), row.lessons_extracted ?? 0, row.notes ?? "", row.tags ?? ""
   ).run();
   return id;
 }
@@ -208,7 +208,7 @@ export default {
 
       if (route === "/promote" && request.method === "POST") {
         const body = await request.json();
-        const quality = +body.quality_score ?? 0.5;
+        const quality = +(body.quality_score ?? 0.5);
         const res = await promoteRun(env, body.run_id, quality);
         return json(res, res.error ? 404 : 200);
       }
