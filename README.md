@@ -23,12 +23,11 @@ Bindings: D1 `quilt-edge-lab` (ledger), KV `RECEIPTS`, R2 `quilt-edge-lab-saves`
 | `GET /bench?rule=30&seed=42&ticks=10000&repeats=20` | throughput via ACCUMULATED repeats (per-request clocks are frozen — see DEBRIEF E-CF-2) |
 | `GET /compare?a=<run_id>&b=<run_id>` | tail equality + full-chain equality + colo verdict |
 | `GET /ledger` | last 10 ledger rows with derived γ/η/efficiency |
-| `POST /ledger/append` | append experiment row; returns derived columns; `?auto=1` also fires AUTO_PROMOTE (efficiency ≥ 15 AND quality ≥ 0.8 → same promotion path as /promote + witness id written to the row's notes) |
+| `POST /ledger/append` | append experiment row; returns derived columns |
 | `POST /promote {run_id, quality_score}` | KV receipt → durable R2 + ledger witness |
-| `GET /colo-report` | per-colo aggregation of `run:*` receipts (count + nunique tails) — W2.1 diversity audit trail |
 | `GET /saved/<key>` | read back a promoted artifact (hash-verify against its run) |
 
-Rules implemented: 30, 90, 110, 150, 184. CA lane is 1-D periodic; the receipt row
+Rules implemented: 30, 90, 110, 184. CA lane is 1-D periodic; the receipt row
 is `fnv1a64(prev | t | stateDigest)` — chain culture follows kit.mjs /
 edge-ledger, digest is by-equality (documented simplification of 64-bit FNV).
 

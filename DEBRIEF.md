@@ -91,26 +91,3 @@ beyond rotation) — same shape, different representative function.
 ## Wheel-spinning protocol (standing)
 Every wave: prereg → runs → receipts/waveN-receipts.json → DEBRIEF entry →
 roadmap re-rank → push. Failure receipts ride the repo forever (R8 lineage).
-
-## Wave 2 (2026-10-02, sealed same day)
-
-Scope: W2.5 (auto-promotion) + W2.1-prep (colo aggregation) + rule 150.
-
-- **W2.5 PASS.** `POST /ledger/append?auto=1` fires AUTO_PROMOTE when the
-  derived row clears efficiency ≥ 15 AND quality ≥ 0.8: same code path as
-  /promote (factored into `promoteRun`), witness ledger row written, witness
-  id written back into the appended row's notes (verified by direct D1
-  SELECT). Default path unchanged (cloud negative control: efficiency-20 row
-  without `auto` → `auto_promote: null`). Receipt E-W2-1: fresh rule-150 run
-  404→200 R2 transition, witness `exp_1790880941033_8p60x4`.
-- **W2.1-prep PASS.** `GET /colo-report` aggregates `run:*` receipts per colo
-  (count + nunique tails). All 8 runs landed SIN → cross-colo claim stays
-  INCONCLUSIVE; the audit trail now exists for the second-region probe.
-- **Rule 150 PASS.** Local pin `1fdaf9740d435dd0` reproduced exactly at the
-  edge (different runtime path); local-check.mjs takes an optional rule arg
-  (default 30 unchanged). Test P4 checks the full chain against an
-  independent XOR-based (l⊕c⊕r) evaluation — different path from the
-  worker's table lookup.
-- Local pins 6/6 (`node --test test/wave2.pins.mjs`); FAIL-first
-  `node tools/local-check.mjs` re-printed `21c225f9e7320974` before any
-  cloud number was trusted. Full detail: receipts/wave2-receipts.json.

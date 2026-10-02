@@ -36,8 +36,7 @@ function step(state, rule, width) {
   }
   return next;
 }
-// Optional argv[2] = rule (default 30 = the sealed wave-1 pin; wave 2 adds 150).
-const p = { rule: +(process.argv[2] ?? 30), seed: 42, ticks: 1000, width: 128 };
+const p = { rule: 30, seed: 42, ticks: 1000, width: 128 };
 const rng = mulberry32(p.seed);
 let state = new Uint8Array(p.width);
 for (let i = 0; i < p.width; i++) state[i] = rng() < 0.5 ? 1 : 0;

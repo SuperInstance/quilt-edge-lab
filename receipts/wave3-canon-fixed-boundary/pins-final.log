@@ -1,0 +1,13 @@
+✔ F1 · H1-F: naive chain diverges under rotated genesis, fixed boundaries (t>=1) (2.427476ms)
+✔ F2 · H2-F: canon chain ALSO diverges under rotated genesis, fixed boundaries (honest boundary of C-ROT) (0.679635ms)
+✔ F3 · C-F: degeneracy broken — fixed-boundary dynamics NOT rotation-equivariant AND translation content != rotated-run chain (2.763546ms)
+✔ F4 · ND: non-degeneracy (>=2 distinct raw states per run; seeds not clones) (0.587384ms)
+✔ F5 · receipt hygiene: wave-2 sealed receipt untouched, params recorded (1.144229ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 170.981606
