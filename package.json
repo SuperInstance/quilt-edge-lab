@@ -1,8 +1,0 @@
-{
-  "name": "quilt-edge-lab",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "test": "node --test test/wave2.pins.mjs"
-  }
-}
