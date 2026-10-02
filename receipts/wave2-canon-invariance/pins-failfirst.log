@@ -1,0 +1,32 @@
+node:fs:441
+    return binding.readFileUtf8(path, stringToFlags(options.flag));
+                   ^
+
+Error: ENOENT: no such file or directory, open '/tmp/zlanes/lane3/results.json'
+    at readFileSync (node:fs:441:20)
+    at file:///tmp/zlanes/lane3/wt/experiments/canon-invariance.pins.mjs:13:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:633:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/tmp/zlanes/lane3/results.json'
+}
+
+Node.js v24.16.0
+✖ /tmp/zlanes/lane3/wt/experiments/canon-invariance.pins.mjs (91.86602ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 112.441416
+
+✖ failing tests:
+
+test at experiments/canon-invariance.pins.mjs:1:1
+✖ /tmp/zlanes/lane3/wt/experiments/canon-invariance.pins.mjs (91.86602ms)
+  'test failed'

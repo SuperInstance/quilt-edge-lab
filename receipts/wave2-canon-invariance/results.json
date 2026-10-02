@@ -1,0 +1,343 @@
+{
+  "experiment": "canon-invariance",
+  "arm": "W2.3-deterministic (semantic sort stands in for embedding sort)",
+  "device": "local node v24.16.0, CPU (pure node per task — no deploy)",
+  "generated_at": "2026-10-01T18:57:14.009Z",
+  "params": {
+    "rule": 30,
+    "width": 128,
+    "ticks": 500,
+    "seeds": [
+      42,
+      7,
+      2026,
+      31337
+    ],
+    "rotations": [
+      1,
+      17,
+      63
+    ],
+    "chain": "fnv1a-64 rows `${prev}|${t}|${sd}` from head fnv1a64(GENESIS_QUILT_EDGE_LAB), rows t=1..T (src/worker.js lineage, file untouched)",
+    "canon": "lexicographic minimum rotation of the state bit-string (Booth-equivalent scan)"
+  },
+  "seeds": {
+    "7": {
+      "genesis_popcount": 50,
+      "genesis_rotation_symmetric": false,
+      "distinct_raw_states": 501,
+      "distinct_canon_states": 501,
+      "naive_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b99d91e548f3cd82",
+          "tail_rot": "188ad193c6f0d8ca"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b99d91e548f3cd82",
+          "tail_rot": "094c8949c1f82707"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b99d91e548f3cd82",
+          "tail_rot": "f1c1fe128ea7335b"
+        }
+      },
+      "canon_rotation": {
+        "1": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "da03690cc2018325",
+          "tail_rot": "da03690cc2018325"
+        },
+        "17": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "da03690cc2018325",
+          "tail_rot": "da03690cc2018325"
+        },
+        "63": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "da03690cc2018325",
+          "tail_rot": "da03690cc2018325"
+        }
+      },
+      "translation_control": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b99d91e548f3cd82",
+          "tail_shift": "188ad193c6f0d8ca"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b99d91e548f3cd82",
+          "tail_shift": "094c8949c1f82707"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b99d91e548f3cd82",
+          "tail_shift": "f1c1fe128ea7335b"
+        }
+      },
+      "observations": {
+        "rule30_rotation_equivariant": true,
+        "translation_content_equals_rotation_run": true
+      }
+    },
+    "42": {
+      "genesis_popcount": 64,
+      "genesis_rotation_symmetric": false,
+      "distinct_raw_states": 501,
+      "distinct_canon_states": 501,
+      "naive_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "db5fbcc2e085adfd",
+          "tail_rot": "320ce8f761c66ac3"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "db5fbcc2e085adfd",
+          "tail_rot": "b45d0746bcf3bfc5"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "db5fbcc2e085adfd",
+          "tail_rot": "22fce62e1777d609"
+        }
+      },
+      "canon_rotation": {
+        "1": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "7cdf4bd259d0ed69",
+          "tail_rot": "7cdf4bd259d0ed69"
+        },
+        "17": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "7cdf4bd259d0ed69",
+          "tail_rot": "7cdf4bd259d0ed69"
+        },
+        "63": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "7cdf4bd259d0ed69",
+          "tail_rot": "7cdf4bd259d0ed69"
+        }
+      },
+      "translation_control": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "db5fbcc2e085adfd",
+          "tail_shift": "320ce8f761c66ac3"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "db5fbcc2e085adfd",
+          "tail_shift": "b45d0746bcf3bfc5"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "db5fbcc2e085adfd",
+          "tail_shift": "22fce62e1777d609"
+        }
+      },
+      "observations": {
+        "rule30_rotation_equivariant": true,
+        "translation_content_equals_rotation_run": true
+      }
+    },
+    "2026": {
+      "genesis_popcount": 63,
+      "genesis_rotation_symmetric": false,
+      "distinct_raw_states": 501,
+      "distinct_canon_states": 501,
+      "naive_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "5d7e239338856063",
+          "tail_rot": "7d4f478c09fbd5f2"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "5d7e239338856063",
+          "tail_rot": "02bb57478a94c2ca"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "5d7e239338856063",
+          "tail_rot": "064c596bf91f4d52"
+        }
+      },
+      "canon_rotation": {
+        "1": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "40b854d7c86db601",
+          "tail_rot": "40b854d7c86db601"
+        },
+        "17": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "40b854d7c86db601",
+          "tail_rot": "40b854d7c86db601"
+        },
+        "63": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "40b854d7c86db601",
+          "tail_rot": "40b854d7c86db601"
+        }
+      },
+      "translation_control": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "5d7e239338856063",
+          "tail_shift": "7d4f478c09fbd5f2"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "5d7e239338856063",
+          "tail_shift": "02bb57478a94c2ca"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "5d7e239338856063",
+          "tail_shift": "064c596bf91f4d52"
+        }
+      },
+      "observations": {
+        "rule30_rotation_equivariant": true,
+        "translation_content_equals_rotation_run": true
+      }
+    },
+    "31337": {
+      "genesis_popcount": 52,
+      "genesis_rotation_symmetric": false,
+      "distinct_raw_states": 501,
+      "distinct_canon_states": 501,
+      "naive_rotation": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b0ae177476e649d8",
+          "tail_rot": "4b57138d92e136db"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b0ae177476e649d8",
+          "tail_rot": "e1757885c19126da"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b0ae177476e649d8",
+          "tail_rot": "941846f23fe66c65"
+        }
+      },
+      "canon_rotation": {
+        "1": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "be2dddb02e3d51d2",
+          "tail_rot": "be2dddb02e3d51d2"
+        },
+        "17": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "be2dddb02e3d51d2",
+          "tail_rot": "be2dddb02e3d51d2"
+        },
+        "63": {
+          "first_divergence_tick": null,
+          "divergent_rows": 0,
+          "rows_compared": 500,
+          "tail_base": "be2dddb02e3d51d2",
+          "tail_rot": "be2dddb02e3d51d2"
+        }
+      },
+      "translation_control": {
+        "1": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b0ae177476e649d8",
+          "tail_shift": "4b57138d92e136db"
+        },
+        "17": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b0ae177476e649d8",
+          "tail_shift": "e1757885c19126da"
+        },
+        "63": {
+          "first_divergence_tick": 1,
+          "divergent_rows": 500,
+          "rows_compared": 500,
+          "tail_base": "b0ae177476e649d8",
+          "tail_shift": "941846f23fe66c65"
+        }
+      },
+      "observations": {
+        "rule30_rotation_equivariant": true,
+        "translation_content_equals_rotation_run": true
+      }
+    }
+  },
+  "cross_seed_identical_states": false
+}
